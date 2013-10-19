@@ -12,7 +12,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
         <link rel="stylesheet" href="bower_components/reveal.js/css/reveal.min.css">
-        <link rel="stylesheet" href="bower_components/reveal.js/css/theme/default.css" id="theme">
+        <link rel="stylesheet" href="./css/serif.css">
+        <link rel="stylesheet" href="./css/styles.css">
 
         <!-- For syntax highlighting -->
         <link rel="stylesheet" href="bower_components/reveal.js/lib/css/zenburn.css" id="highlight-theme">
@@ -64,13 +65,13 @@
             // Full list of configuration options available here:
             // https://github.com/hakimel/reveal.js#configuration
             Reveal.initialize({
-                controls: true,
-                progress: true,
+                controls: false,
+                progress: false,
                 history: true,
                 center: true,
 
                 theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+                transition: 'linear',
 
                 // Optional libraries used to extend on reveal.js
                 dependencies: [
