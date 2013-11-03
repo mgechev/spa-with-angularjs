@@ -82,6 +82,5 @@ module.exports = (grunt) ->
         'coffeelint',
         'jshint',
         'build:index',
-        'connect:livereload',
-        'watch'
+        'watch:index'
     ]

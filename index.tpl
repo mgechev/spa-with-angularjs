@@ -66,7 +66,7 @@
             // https://github.com/hakimel/reveal.js#configuration
             Reveal.initialize({
                 controls: false,
-                progress: false,
+                progress: true,
                 history: true,
                 center: true,
 
@@ -87,6 +87,50 @@
                     { src: 'js/loadhtmlslides.js', condition: function() { return !!document.querySelector( '[data-html]' ); } }
                 ]
             });
+      Reveal.addEventListener('jungle-slide', function () {
+        setTimeout(function () {
+          document.getElementsByClassName('jungle-text')[0].classList.add('jungle-text-show');
+        }, 2000);
+      });
+      Reveal.addEventListener('separationofconcerns-slide', function () {
+        function animateStroke(path, duration) {
+          path.style.visibility = 'visible';
+          var length = path.getTotalLength();
+          path.style.transition = path.style.WebkitTransition =
+            'none';
+          path.style.strokeDasharray = length + ' ' + length;
+          path.style.strokeDashoffset = length;
+          path.getBoundingClientRect();
+          path.style.transition = path.style.WebkitTransition =
+            'stroke-dashoffset ' + duration + 's ease-in-out';
+          path.style.strokeDashoffset = '0';
+        }
+        setTimeout(function () {
+          animateStroke(document.querySelector('#s1'), 1);
+          setTimeout(function () {
+            animateStroke(document.querySelector('#s2'), 1);
+          }, 1000);
+        }, 500);
+      });
+      Reveal.addEventListener('blink', function (e) {
+        var BLINK_DURATION = 500;
+        var el = document.getElementById('blink');
+        hideElement(el);
+        function hideElement(el) {
+          el.style.visibility = 'hidden';
+          setTimeout(function () {
+            showElement(el);
+          }, BLINK_DURATION);
+        }
+
+        function showElement(el) {
+          el.style.visibility = 'visible';
+          setTimeout(function () {
+            hideElement(el);
+          }, BLINK_DURATION);
+        }
+      });
+
         </script>
 
     </body>

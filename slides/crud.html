@@ -1,0 +1,427 @@
+<section>
+  <section>
+    <h2>CRUD с AngularJS</h2>
+  </section>
+  <section data-background="#000">
+    <img src="images/magic.jpg" alt="">
+  </section>
+  <section data-background="#323E32">
+    <img src="images/not-understand.jpg" alt="">
+  </section>
+  <section>
+    <h3>Основни градивни елементи</h3>
+    <ul>
+      <li class="fragment">Темплейти</li>
+      <li class="fragment">Директиви - всички DOM манипулации се случват тук</li>
+      <li class="fragment">Контролери - бизнес логиката за една страница</li>
+      <li class="fragment">Филтри - форматиране на данните</li>
+      <li class="fragment">Услуги - всичко останало</li>
+    </ul>
+  </section>
+  <section data-background="#fff" data-state="separationofconcerns-slide">
+    <div class="spa-container">
+      <svg xmlns="http://www.w3.org/2000/svg" height="600" width="600" xmlns:xlink= "http://www.w3.org/1999/xlink">
+        <image xlink:href="./images/separationofconcerns.jpg" width="600" height="600" x="0" y="0" z-index="1" />
+        <path id="s1" d="M 0 0 600 600 " stroke-width="14" fill="none" stroke="red" z-index="200" style="visibility: hidden;" />
+        <path id="s2" d="M 600 0 0 600 " stroke-width="14" fill="none" stroke="red" z-index="200" style="visibility: hidden;" />
+      </svg>
+    </div>
+  </section>
+  <section data-background="#fff">
+    <img src="./images/arch.png" alt="">
+  </section>
+  <section data-background="#fff">
+    <img src="./images/arch-view.png" alt="">
+  </section>
+  <section>
+    <h3>Темплейти</h3>
+<pre><code>
+  <div ng-app>
+    <form ng-hide="collection.split(',').length > 3">
+      Въведи стойности разделени със запетая:
+      <input type="text" ng-model="collection">
+    </form>
+    <p ng-show="collection.split(',').length > 3">
+      Въведохте 3 стойности
+    </p>
+    <ul>
+      <li ng-repeat="item in collection.split(',')"
+          ng-show="item.length > 0">
+          {{item | uppercase}}
+      </li>
+    </ul>
+  </div>
+</code></pre>
+  </section>
+  <section>
+    <h3>Темплейти</h3>
+    <iframe src="./examples/template.html" width="800" height="300" frameborder="0"></iframe>
+  </section>
+  <section>
+    <h3>Темплейти</h3>
+    <ul>
+      <li><strong>ng-app</strong> - Задава базовия елемент на приложението</li>
+      <li><strong>ng-hide/ng-show</strong> - Показва/скрива елемент на базата на някакво условие</li>
+      <li><strong>ng-model</strong> - Създава двупосочен binding</li>
+      <li><strong>ng-repeat</strong> - Итерира по дадена колеция</li>
+      <li><strong>{{ item | uppercase }}</strong> - Създава еднопосочен binding и прилага филтър</li>
+    </ul>
+  </section>
+  <section>
+    <h3>Темплейти</h3>
+    <strong>ng-app, ng-hide, ng-show, ng-model</strong> ще наричаме
+    <br><br>
+    <h3 class="fragment">директиви</h3>
+  </section>
+  <section data-background="#fff">
+    <img src="./images/arch-directives.png" alt="">
+  </section>
+  <section>
+    <h3>Директивите се изпозват за...</h3>
+    <ul>
+      <li class="fragment">всички DOM манипулации</li>
+      <li class="fragment">създаване на преизползваеми компоненти</li>
+    </ul>
+  </section>
+  <section>
+    <h3>Директиви(те са)</h3>
+    <ul>
+      <li class="fragment">Мощни</li>
+      <li class="fragment">Полезни</li>
+      <li class="fragment">Сложни</li>
+    </ul>
+  </section>
+  <section>
+    <h3>Мощни</h3>
+    <ul>
+      <li>Учат HTML на нови неща</li>
+      <li>Създават вътрешен DSL в HTML</li>
+    </ul>
+  </section>
+  <section>
+    <h3>DSL</h3>
+    <pre><code>
+  &lt;modal draggable title=&quot;Register&quot;&gt;
+    &lt;form action=&quot;&quot; novalidate&gt;
+      &lt;expander&gt;
+        &lt;section title=&quot;Main&quot;&gt;
+          E-mail: &lt;input type=&quot;email&quot; /&gt;&lt;br/&gt;
+          Password: &lt;input type=&quot;password&quot; /&gt;
+        &lt;/section&gt;
+        &lt;section title=&quot;Extra&quot;&gt;
+          Name: &lt;input type=&quot;text&quot; /&gt;&lt;br/&gt;
+          Address: &lt;input type=&quot;text&quot; /&gt;
+        &lt;/section&gt;
+      &lt;/expander&gt;
+      &lt;input type=&quot;submit&quot; value=&quot;Register&quot; /&gt;
+    &lt;/form&gt;
+  &lt;/modal&gt;
+
+    </code></pre>
+  </section>
+  <section>
+    <img src="images/w3c.png" alt="" style="box-shadow: 0px 0px 0px #fff">
+  </section>
+  <section data-background="#fff">
+    <img src="images/broken-heart.jpg" alt="" style="box-shadow: 0px 0px 0px #fff">
+  </section>
+  <section>
+    <h3>Декларация на директиви с:</h3>
+    <ul>
+      <li>Атрибути - позволени са "data-", "x-" префикси</li>
+      <li>Елементи</li>
+      <li>Класове</li>
+      <li>Коментари</li>
+    </ul>
+  </section>
+  <section>
+<pre><code>
+  &lt;div data-modal data-draggable data-title=&quot;Register&quot;&gt;
+    &lt;form action=&quot;&quot; novalidate&gt;
+      &lt;div data-expander&gt;
+        &lt;section data-title=&quot;Main&quot;&gt;
+          E-mail: &lt;input type=&quot;email&quot; /&gt;&lt;br/&gt;
+          Password: &lt;input type=&quot;password&quot; /&gt;
+        &lt;/section&gt;
+        &lt;section data-title=&quot;Extra&quot;&gt;
+          Name: &lt;input type=&quot;text&quot; /&gt;&lt;br/&gt;
+          Address: &lt;input type=&quot;text&quot; /&gt;
+        &lt;/section&gt;
+      &lt;/div&gt;
+      &lt;input type=&quot;submit&quot; value=&quot;Register&quot; /&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+
+</code></pre>
+  </section>
+  <section>
+    <h3>Полезни</h3>
+    <ul>
+      <li>Отделят DOM манипулациите от бизнес логиката</li>
+      <li>Напълно декларативни темплейти</li>
+      <li>Удобни за създаване на преизползваеми компоненти</li>
+    </ul>
+  </section>
+  <section data-state="blink">
+    <h3>Пример:</h3>
+    <p>Липсвал ли ви е <span id="blink">blink</span> елементът?</p>
+    <p class="fragment">...едва ли...</p>
+    <pre class="fragment"><code>
+angular.module('demo').directive('blink', function ($timeout) {
+
+  var BLINK_DURATION = 500;
+
+  function hideElement(el) {
+    el.style.visibility = 'hidden';
+    $timeout(function () {
+      showElement(el);
+    }, BLINK_DURATION);
+  }
+
+  function showElement(el) {
+    el.style.visibility = 'visible';
+    $timeout(function () {
+      hideElement(el);
+    }, BLINK_DURATION);
+  }
+
+  return {
+    restrict: 'E',
+    link: function (scope, el) {
+      hideElement(el[0]);
+    }
+  };
+});
+    </code></pre>
+  </section>
+  <section>
+    <h3>може да бъде използвана като:</h3>
+    <pre><code>
+<blink>Blinking data</blink>
+    </code></pre>
+  </section>
+  <section>
+    <h3>Сложни</h3>
+    <img src="./images/complex.jpg" alt="">
+  </section>
+  <section>
+    <pre><code style="max-height: 610px">
+var myModule = angular.module(...);
+
+myModule.directive('directiveName', function factory(injectables) {
+  var directiveDefinitionObject = {
+    priority: 0,
+    template: '<div></div>', // or // function(tElement, tAttrs) { ... },
+    // or
+    // templateUrl: 'directive.html', // or // function(tElement, tAttrs) { ... },
+    replace: false,
+    transclude: false,
+    restrict: 'A',
+    scope: false,
+    controller: function($scope, $element, $attrs, $transclude, otherInjectables) { ... },
+    require: 'siblingDirectiveName', // or // ['^parentDirectiveName', '?optionalDirectiveName', '?^optionalParent'],
+    compile: function compile(tElement, tAttrs, transclude) {
+      return {
+        pre: function preLink(scope, iElement, iAttrs, controller) { ... },
+        post: function postLink(scope, iElement, iAttrs, controller) { ... }
+      }
+     // or
+     // return function postLink( ... ) { ... }
+    },
+    // or
+    // link: {
+    //  pre: function preLink(scope, iElement, iAttrs, controller) { ... },
+    //  post: function postLink(scope, iElement, iAttrs, controller) { ... }
+    // }
+    // or
+    // link: function postLink( ... ) { ... }
+  };
+  return directiveDefinitionObject;
+});
+    </code></pre>
+  </section>
+  <section>
+    <h3>Обикновено се използва:</h3>
+    <pre class="fragment"><code>
+angular.module('myModule').directive('blink', function () {
+  return function (scope, elem, attrs) {
+    //add event listeners
+  };
+});
+    </code></pre>
+  </section>
+  <section>
+    <h3>Какво е scope?</h3>
+    <blockquote cite="http://docs.angularjs.org/">
+scope is an object that refers to the application model. It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events.
+    </blockquote>
+  </section>
+  <section>
+    <img src="./images/scopes.png" alt="">
+  </section>
+  <section>
+    <img src="./images/scopes-real.png" alt="">
+  </section>
+  <section data-background="#fff">
+    <img src="./images/arch-scope.png" alt="">
+  </section>
+  <section>
+    <h3>AngularJS изрази</h3>
+    <p class="fragment">Наподобяващи JavaScript парчета код, които
+      се интерпретират от AngularJS в даден контекст. Примери:</p>
+    <ul>
+      <li class="fragment">1 + 2</li>
+      <li class="fragment">foo.bar | uppercase</li>
+      <li class="fragment">42 * 8 | currency</li>
+    </ul>
+  </section>
+  <section data-background="#fff">
+    <img src="./images/arch-controller.png" alt="">
+  </section>
+  <section>
+    <h3>Контролери</h3>
+    <p class="fragment">JavaScript функции, които добавят данни и поведение (behavior) към scope.</p>
+    <pre class="fragment"><code>
+function MainCtrl($scope, $location, Auth) {
+  $scope.foo = 'My awesome data!';
+  $scope.logout = function () {
+    Auth.logout()
+    .then(function () {
+      $location.path('unauth');
+    });
+  };
+}
+    </code></pre>
+  </section>
+  <section>
+    <h3>Задаване на контролер в темплейта</h3>
+    <pre><code>
+&lt;body ng-app ng-controller=&quot;BaseCtrl&quot;&gt;
+  &lt;div ng-controller=&quot;MainCtrl&quot;&gt;
+    {{foo}}
+    &lt;button ng-click=&quot;doAwesomeThing()&quot;&gt;GO!&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+    </code></pre>
+    <p class="fragment">Къде предполагате е дефиниран <strong>doAwesomeThing</strong>?</p>
+  </section>
+  <section>
+    <h3>Не използвайте:</h3>
+    <pre><code>
+  function MainCtrl(...) {
+    ...
+  }
+    </code></pre>
+    <div class="fragment">...използвайте:</div>
+    <pre class="fragment"><code>
+  angular.module('myModule').controller('MainCtrl', function (...) {
+    ...
+  });
+    </code></pre>
+  </section>
+  <section>
+    <h3>Two-way binding</h3>
+    <p class="fragment">AngularJS създава двупосочен binding между модела (полетата на scope) и изгледа (view).</p>
+    <iframe class="fragment" src="./examples/template.html" width="800" height="300" frameborder="0"></iframe>
+  </section>
+  <section>
+    <h3>Dependency Injection</h3>
+    <pre class="fragment"><code>
+      function MainCtrl($scope, $location, Auth) { /* body */ }
+    </code></pre>
+    <ul>
+      <li class="fragment">Автоматично възстановяване на зависимостите</li>
+      <li class="fragment">Спестява писане на излишен код</li>
+      <li class="fragment">Прави кода по-лесен за тестване</li>
+      <li class="fragment">Прави кода по-четим</li>
+    </ul>
+  </section>
+  <section data-background="#fff">
+    <img src="./images/arch-services.png" alt="">
+  </section>
+  <section>
+    <h3>Услуги</h3>
+    <blockquote class="fragment">
+      Singleton обекти, които носят в себе си функционалност необходима за извършването на чести дейности в едно уеб приложение.
+    </blockquote>
+  </section>
+  <section>
+    <h3>Могат да се използват за:</h3>
+    <ul>
+      <li class="fragment">XMLHttpRequest</li>
+      <li class="fragment">Работа с HTML5 File API</li>
+      <li class="fragment">...и други.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>Предефинирани услуги</h3>
+    <p class="fragment">AngularJS предоставя две услуги на различни нива на абстрация, занимаващи се с XMLHttpRequest</p>
+    <ul>
+      <li class="fragment"><strong>$http</strong></li>
+      <li class="fragment"><strong>$resource</strong></li>
+    </ul>
+  </section>
+  <section>
+    <h3>$resource</h3>
+    <pre><code>
+angular.module('myModule').factory('User', function ($resource) {
+  return $resource('http://example.com/user/:id');
+});
+
+//...
+
+function RegisterCtrl($scope, User) {
+  if ($scope.form.isValid) {
+    var user = new User({
+      user: $scope.username,
+      password: $scope.password,
+      email: $scope.email
+    });
+    user.$save();
+  }
+}
+    </code></pre>
+  </section>
+  <section>
+    <img src="images/heavy-loaded.jpg" alt="">
+  </section>
+  <section>
+    <pre>
+├── app
+│   ├── app.js
+│   ├── controllers
+│   │   ├── page1
+│   │   │   ├── FirstCtrl.js
+│   │   │   └── SecondCtrl.js
+│   │   └── page2
+│   │       └── ThirdCtrl.js
+│   ├── directives
+│   │   ├── page1
+│   │   │   └── directive1.js
+│   │   └── page2
+│   │       ├── directive2.js
+│   │       └── directive3.js
+│   ├── filters
+│   │   ├── page1
+│   │   └── page2
+│   └── services
+│       ├── CommonService.js
+│       ├── cache
+│       │   ├── Cache1.js
+│       │   └── Cache2.js
+│       └── models
+│           ├── Model1.js
+│           └── Model2.js
+├── lib
+└── test
+    </pre>
+  </section>
+  <section>
+    <a href="https://github.com/mgechev/angularjs-style-guide" target="_blank">
+      <h3>Добри практики</h3>
+    </a>
+  </section>
+  <section>
+    <h2>Благодаря за вниманието!</h2>
+  </section>
+</section>
