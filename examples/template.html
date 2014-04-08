@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+  body {
+    font-size: 2em;
+  }
+  input {
+    height: 30px;
+    font-size: 20px;
+  }
+  </style>
+</head>
+<body>
+  <div ng-app>
+    <form ng-hide="collection.split(',').length > 3">
+      Въведи стойности:
+      <input type="text" ng-model="collection">
+    </form>
+    <p ng-show="collection.split(',').length > 3">
+      Въведохте 3 стойности
+    </p>
+    <ul>
+      <li ng-repeat="item in collection.split(',')" ng-show="item.length > 0">{{item | uppercase}}</li>
+    </ul>
+  </div>
+  <script src="../bower_components/angularjs/index.js"></script>
+</body>
+</html>
